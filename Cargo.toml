@@ -1,0 +1,22 @@
+[package]
+authors = ["Iain (Bill) Wiseman) <bw@bibble.co.nz>"]
+description = "Rust code for the XC3748 MP3 Audio Player"
+keywords = ["xc3748", "mp3", "audio", "player"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/bibble235/xc3748"
+name = "xc3748"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serialport = "4.6.1"
+
+[profile.dev]
+opt-level = "s"
+codegen-units = 1
+incremental = false
+
+[profile.release]
+codegen-units = 1
+debug = true
+lto = true
