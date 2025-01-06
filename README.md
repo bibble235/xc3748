@@ -9,7 +9,7 @@ Serial Port Driver for xc3748
 ```rust
 use std::time::Duration;
 
-use xc3748_rs::{Feedback, Xc3748};
+use xc3748::{Feedback, Xc3748, Xc3748Device};
 
 fn main() {
     let port = serialport::new("/dev/ttyUSB0", 9600)
@@ -17,9 +17,9 @@ fn main() {
         .open()
         .expect("Failed to open port");
 
-    let mut xc3748 = Xc3748::new(port, Feedback::OFF);
-    // xc3748.play();
-    xc3748.play_with_index(1);
+    let device = Xc3748Device::new(port);
+    let mut xc3748 = Xc3748::new(Box::new(device), Feedback::OFF);
+    xc3748.play();
 }
 ```
 

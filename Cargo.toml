@@ -1,15 +1,25 @@
 [package]
-authors = ["Iain (Bill) Wiseman) <bw@bibble.co.nz>"]
+authors = ["Iain (Bill) Wiseman <bw@bibble.co.nz>"]
 description = "Rust code for the XC3748 MP3 Audio Player"
-keywords = ["xc3748", "mp3", "audio", "player"]
+keywords = ["xc3748", "mp3", "audio", "player", "embedded"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/bibble235/xc3748"
 name = "xc3748"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 
 [dependencies]
-serialport = "4.6.1"
+serialport = { version = "4.6.1", optional = true }
+
+embedded-hal-nb = { version = "1.0.0", optional = true }
+
+log = { version = "0.4.21", optional = true }
+esp-println = { version = "0.12.0", features = [
+    "esp32",
+    "log",
+], optional = true }
+
+# esp-hal = { version = "0.22.0", features = ["esp32", "defmt"], optional = true }
 
 [profile.dev]
 opt-level = "s"
@@ -20,3 +30,11 @@ incremental = false
 codegen-units = 1
 debug = true
 lto = true
+
+# Create a feature for the serialport and uart0 dependencies
+[features]
+embedded = ["no_std", "embedded-hal-nb", "log", "esp-println"]
+std = []
+no_std = []
+x64 = ["std", "serialport"]
+default = ["embedded"]
